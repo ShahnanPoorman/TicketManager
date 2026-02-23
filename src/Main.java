@@ -1,11 +1,19 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //bool running that's true (not constant)
         boolean running = true;
+
+        //Ticket variable placeholders
+        String ticketName;
+        String ticketContent;
+
+        //Ticket Service
+        TicketService ticketService = new TicketService();
 
         //scanner object!
         Scanner sc = new Scanner(System.in);
@@ -23,6 +31,7 @@ public class Main {
 
             //save user input to variable
             int choice = sc.nextInt();
+            sc.nextLine();
 
             //switch statement to read user input
             switch (choice){
@@ -31,9 +40,16 @@ public class Main {
                 }
                 case 2:{
                     //prompt user for ticket name
+                    ticketName = promptForTicketInput(sc,"name");
                     //prompt user for ticket content
+                    ticketContent = promptForTicketInput(sc, "content");
                     //display ticket info
+                    System.out.println("Ticket created:");
+                    System.out.println(ticketService.createTicket(ticketName, ticketContent).toString());
+                    System.out.println("Press enter to return to main menu.");
                     //any button to return to main menu
+                    System.in.read();
+
                 }
                 case 3:{
                     //prompt user for ticket id
@@ -64,7 +80,9 @@ public class Main {
 
                 }
             }
+
         }
+        System.out.println("Thank you for using my console CRUD app :)");
 
         sc.close();
     }
