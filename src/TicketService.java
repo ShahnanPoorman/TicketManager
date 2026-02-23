@@ -22,14 +22,10 @@ public class TicketService {
 
     public boolean updateTicketContent(int id, String newContent){
         Ticket ticket = ticketMap.get(id);
+        if(ticket == null) return false;
 
-        if(ticket != null){
-            ticket.setContent(newContent);
-            return true;
-        }
-        else {
-            return false;
-        }
+        ticket.setContent(newContent);
+        return true;
     }
 
     public boolean deleteTicket(int id){
