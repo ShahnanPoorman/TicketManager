@@ -8,9 +8,6 @@ public class Main {
         //bool running that's true (not constant)
         boolean running = true;
 
-        //Ticket placeholder variable
-        Ticket ticket;
-
         //Ticket Service
         TicketService ticketService = new TicketService();
 
@@ -24,9 +21,9 @@ public class Main {
             //2) MakeTicket()
             //3) GetTicket(id)
             //4) ListTickets()
-            //50 UpdateTicketName
-            //5) UpdateTicketContent(id)
-            //6) DeleteTicket()
+            //5) UpdateTicketName
+            //6) UpdateTicketContent(id)
+            //7) DeleteTicket()
 
             //save user input to variable
             int choice = getMenuChoice(sc);
@@ -38,10 +35,7 @@ public class Main {
                     break;
                 }
                 case 2:{
-                    ticket = ticketService.createTicket(promptForTicketInput(sc,"name"),
-                            promptForTicketInput(sc, "content"));
-                    System.out.println("Ticket created:");
-                    System.out.println(ticket.toString());
+                    handleCreateTicket(sc, ticketService);
                     break;
                 }
                 case 3:{
@@ -56,44 +50,16 @@ public class Main {
                     break;
                 }
                 case 5:{
-                    //prompts user for ticket id
-                    ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(name)"));
-                    //display ticket info
-                    System.out.println(ticket);
-                    System.out.println("What would you like to replace the ticket's name with?");
-
-                    if (ticketService.updateTicketName(ticket.getId(), sc.nextLine())){
-                        System.out.println("Ticket updated.\n" + ticket);
-                    }
+                    handleUpdateTicketName(sc, ticketService);
                     break;
 
                 }
                 case 6:{
-                    //prompts user for ticket id
-                    ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(content)"));
-                    //display ticket info
-                    System.out.println(ticket);
-                    System.out.println("What would you like to replace the ticket's content with?");
-
-                    if (ticketService.updateTicketContent(ticket.getId(), sc.nextLine())){
-                        System.out.println("Ticket updated.\n" + ticket);
-                    }
+                    handleUpdateTicketContent(sc, ticketService);
                     break;
                 }
                 case 7:{
-                    //prompts user for ticket id
-                    ticket = ticketService.getTicketById(promptForTicketId(sc, "delete"));
-                    //display ticket info
-                    System.out.println(ticket);
-                    System.out.println("Is this the ticket that you'd like to delete? y/n?");
-                    String confirmation = sc.nextLine().trim();
-                    if(confirmation.equalsIgnoreCase("y") || confirmation.equalsIgnoreCase("yes")){
-                        if (ticketService.deleteTicket(ticket.getId())){
-                            System.out.println("Ticket deleted successfully");
-                        }
-                    } else {
-                        System.out.println("Ticket not deleted");
-                    }
+                    handleDeleteTicket(sc, ticketService);
                     break;
                 }
             }
@@ -107,6 +73,53 @@ public class Main {
         System.out.println("Thank you for using my console CRUD app :)");
 
         sc.close();
+    }
+
+    static void handleCreateTicket(Scanner sc, TicketService ticketService){
+        Ticket ticket = ticketService.createTicket(promptForTicketInput(sc,"name"),
+                promptForTicketInput(sc, "content"));
+        System.out.println("Ticket created:");
+        System.out.println(ticket.toString());
+    }
+
+    static void handleUpdateTicketName(Scanner sc, TicketService ticketService){
+        //prompts user for ticket id
+        Ticket ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(name)"));
+        //display ticket info
+        System.out.println(ticket);
+        System.out.println("What would you like to replace the ticket's name with?");
+
+        if (ticketService.updateTicketName(ticket.getId(), sc.nextLine())){
+            System.out.println("Ticket updated.\n" + ticket);
+        }
+    }
+
+    static void handleUpdateTicketContent(Scanner sc, TicketService ticketService){
+        //prompts user for ticket id
+        Ticket ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(content)"));
+        //display ticket info
+        System.out.println(ticket);
+        System.out.println("What would you like to replace the ticket's content with?");
+
+        if (ticketService.updateTicketContent(ticket.getId(), sc.nextLine())){
+            System.out.println("Ticket updated.\n" + ticket);
+        }
+    }
+
+    static void handleDeleteTicket(Scanner sc, TicketService ticketService){
+        //prompts user for ticket id
+        Ticket ticket = ticketService.getTicketById(promptForTicketId(sc, "delete"));
+        //display ticket info
+        System.out.println(ticket);
+        System.out.println("Is this the ticket that you'd like to delete? y/n?");
+        String confirmation = sc.nextLine().trim();
+        if(confirmation.equalsIgnoreCase("y") || confirmation.equalsIgnoreCase("yes")){
+            if (ticketService.deleteTicket(ticket.getId())){
+                System.out.println("Ticket deleted successfully");
+            }
+        } else {
+            System.out.println("Ticket not deleted");
+        }
     }
 
     static int getMenuChoice(Scanner sc){
