@@ -24,6 +24,7 @@ public class Main {
             //2) MakeTicket()
             //3) GetTicket(id)
             //4) ListTickets()
+            //50 UpdateTicketName
             //5) UpdateTicketContent(id)
             //6) DeleteTicket()
 
@@ -56,7 +57,20 @@ public class Main {
                 }
                 case 5:{
                     //prompts user for ticket id
-                    ticket = ticketService.getTicketById(promptForTicketId(sc, "edit"));
+                    ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(name)"));
+                    //display ticket info
+                    System.out.println(ticket);
+                    System.out.println("What would you like to replace the ticket's name with?");
+
+                    if (ticketService.updateTicketName(ticket.getId(), sc.nextLine())){
+                        System.out.println("Ticket updated.\n" + ticket);
+                    }
+                    break;
+
+                }
+                case 6:{
+                    //prompts user for ticket id
+                    ticket = ticketService.getTicketById(promptForTicketId(sc, "edit(content)"));
                     //display ticket info
                     System.out.println(ticket);
                     System.out.println("What would you like to replace the ticket's content with?");
@@ -66,7 +80,7 @@ public class Main {
                     }
                     break;
                 }
-                case 6:{
+                case 7:{
                     //prompts user for ticket id
                     ticket = ticketService.getTicketById(promptForTicketId(sc, "delete"));
                     //display ticket info
@@ -103,8 +117,9 @@ public class Main {
         2) MakeTicket()
         3) GetTicket(id)
         4) ListTickets()
-        5) UpdateTicketContent(id)
-        6) DeleteTicket()
+        5) UpdateTicketName(id)
+        6) UpdateTicketContent(id)
+        7) DeleteTicket(id)
         """);
         int choice = sc.nextInt();
         sc.nextLine();
