@@ -65,7 +65,7 @@ public class Ticket {
     }
 
     public void setContent(String content){
-        if(content.length() > 25 && content.length() < 150) {
+        if(content.length() >= MIN_CONTENT_LENGTH && content.length() <= MAX_CONTENT_LENGTH) {
             this.content = content;
         } else {
             throw new IllegalArgumentException("Content cannot be shorter than 25 characters or " +
