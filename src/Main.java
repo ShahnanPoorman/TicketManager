@@ -82,6 +82,7 @@ public class Main {
                     }
                     break;
                 }
+                default:
             }
 
             if(running){
@@ -158,19 +159,28 @@ public class Main {
     }
 
     static int getMenuChoice(Scanner sc){
-        System.out.println("""
-        Please enter the number for the task you want to complete:
-        
-        1) Exit / Back
-        2) MakeTicket()
-        3) GetTicket(id)
-        4) ListTickets()
-        5) UpdateTicketName(id)
-        6) UpdateTicketContent(id)
-        7) DeleteTicket(id)
-        """);
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice;
+        while(true){
+            System.out.println("""
+                Please enter the number for the task you want to complete:
+                
+                1) Exit / Back
+                2) MakeTicket()
+                3) GetTicket(id)
+                4) ListTickets()
+                5) UpdateTicketName(id)
+                6) UpdateTicketContent(id)
+                7) DeleteTicket(id)
+                """);
+            String input = sc.nextLine().trim();
+            try {
+                choice = Integer.parseInt(input);
+                if (choice >= 1 && choice <=7) break;
+                else System.out.println("Please enter a number between 1 and 7.");
+            } catch (NumberFormatException e){
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
         return choice;
     }
 
