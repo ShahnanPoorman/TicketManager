@@ -190,10 +190,19 @@ public class Main {
 
     }
 
-    static int promptForTicketId(Scanner sc, String input){
-        System.out.println("What is the id of the ticket you would like to " + input + "?" );
-        int choice = sc.nextInt();
-        sc.nextLine();
-        return choice;
+    static int promptForTicketId(Scanner sc, String action) {
+        int id = -1;
+        while (true) {
+            System.out.println("What is the id of the ticket you would like to " + action + "?");
+            String input = sc.nextLine().trim();
+            try {
+                id = Integer.parseInt(input);
+                if (id >= 0) break;
+                else System.out.println("ID must be a non-negative number.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer ID.");
+            }
+        }
+        return id;
     }
 }
