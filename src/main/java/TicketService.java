@@ -1,42 +1,52 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.*;
 
+@Service
 public class TicketService {
-    private final Map<Integer, Ticket> ticketMap = new HashMap<>();
+    private final TicketRepository ticketRepository;
+
+    @Autowired
+    public TicketService(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
 
     public Ticket createTicket(String name, String content){
         Ticket ticket = new Ticket(name, content);
-        ticketMap.put(ticket.getId(), ticket);
-        return ticket;
+        return ticketRepository.save(ticket);
     }
 
     public Ticket getTicketById(int id){
-        return ticketMap.get(id);
+        return ticketRepository
+                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public List<Ticket> getAllTickets(){
-        return new ArrayList<>(ticketMap.values());
+        return ticketRepository.findAll();
     }
 
-    public boolean updateTicketName(int id, String newName){
-        Ticket ticket = ticketMap.get(id);
-        if(ticket == null) return false;
+    public Ticket updateTicketName(int id, String newName){
+        Ticket ticket = ticketRepository
+                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ticket.setName(newName);
-        return true;
+        return ticketRepository.save(ticket);
     }
-    public boolean updateTicketContent(int id, String newContent){
-        Ticket ticket = ticketMap.get(id);
-        if(ticket == null) return false;
+    public Ticket updateTicketContent(int id, String newContent){
+        Ticket ticket = ticketRepository
+                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ticket.setContent(newContent);
-        return true;
+        return ticketRepository.save(ticket);
     }
 
-    public boolean deleteTicket(int id){
-        return ticketMap.remove(id) != null;
+    public void deleteTicket(int id){
+        if (!ticketRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        ticketRepository.deleteById(id);
     }
 
 
