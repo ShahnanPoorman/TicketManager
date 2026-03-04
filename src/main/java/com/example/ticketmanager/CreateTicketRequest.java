@@ -1,3 +1,4 @@
+package com.example.ticketmanager;
 
 public class CreateTicketRequest {
     private String name;

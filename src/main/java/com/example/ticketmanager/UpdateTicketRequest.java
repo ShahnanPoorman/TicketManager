@@ -1,3 +1,5 @@
+package com.example.ticketmanager;
+
 public class UpdateTicketRequest {
     private String value;
 

@@ -1,9 +1,10 @@
+package com.example.ticketmanager;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name="TICKET", schema="TICKET_MANAGER")
 public class Ticket {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Ticket {
         }
         else {
 
-            this.name = "Ticket #" + id;
+            this.name = "com.example.ticketmaster.Ticket #" + id;
         }
 
         if(content.length() > 25 && content.length() < 150) {
@@ -65,7 +66,7 @@ public class Ticket {
         }
         else {
 
-            this.name = "Ticket #" + id;
+            this.name = "com.example.ticketmaster.Ticket #" + id;
         }
     }
 
