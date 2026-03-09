@@ -19,7 +19,7 @@ public class TicketController {
     @PostMapping
     Ticket createTicket(@RequestBody CreateTicketRequest request) {
         return ticketService.createTicket(request.getName(), request.getContent(),
-                request.getUserID());
+                request.getUserId());
     }
 
     @GetMapping("/{id}")

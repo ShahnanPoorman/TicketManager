@@ -17,9 +17,10 @@ public class TicketService {
         this.userRepository = userRepository;
     }
 
-    public Ticket createTicket(String name, String content, long userID){
+    public Ticket createTicket(String name, String content, long userId){
         Ticket ticket = new Ticket();
-        User user = userRepository.findById(userID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user =
+                userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         ticket.setName(name);
         ticket.setContent(content);
         ticket.setUser(user);

@@ -3,7 +3,7 @@ package com.example.ticketmanager;
 public class CreateTicketRequest {
     private String name;
     private String content;
-    private long userID;
+    private long userId;
 
     public CreateTicketRequest(){}
 
@@ -12,7 +12,7 @@ public class CreateTicketRequest {
     public void setName(String name) {this.name = name;}
     public void setContent(String content) {this.content = content;}
 
-    public long getUserID() {return userID;}
+    public long getUserId() {return userId;}
 
-    public void setUser(long userID) {this.userID = userID;}
+    public void setUser(long userID) {this.userId = userID;}
 }
