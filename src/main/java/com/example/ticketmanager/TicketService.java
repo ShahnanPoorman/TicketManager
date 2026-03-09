@@ -9,14 +9,17 @@ import java.util.*;
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository) {
+    public TicketService(TicketRepository ticketRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
+        this.userRepository = userRepository;
     }
 
-    public Ticket createTicket(String name, String content, User user){
+    public Ticket createTicket(String name, String content, long userID){
         Ticket ticket = new Ticket();
+        User user = userRepository.findById(userID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         ticket.setName(name);
         ticket.setContent(content);
         ticket.setUser(user);
